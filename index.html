@@ -38,6 +38,8 @@
                     return 'Холодно!';
                 } else if (distance < 320) {
                     return 'Очень холодно!';
+                } else if (distance < 380) {
+                    return 'Очень, очень холодно!'
                 } else {
                     return 'Замерзнешь!';
                 }
@@ -61,7 +63,7 @@
             // Записываем новую подсказку
             $('#distance').text(distanceHint);
             // Проверка игры до 8 px от цели
-            if (distance < 8) {
+            if (distance < 15) {
                  alert('Клад найден! Сделано кликов: ' + clicks);
             }
                     
