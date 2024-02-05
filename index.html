@@ -5,10 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Найди клад!</title>
     <link rel="stylesheet" href="./style.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
     <h1 id="heading">Найди клад!</h1>
-    <img class="treasure-map" src="./images/map game.jpeg" alt="treasure map">
+    <img id="map" class="treasure-map" src="./images/map game.jpeg" alt="treasure map">
+    <p id="distance"></p>
+    <script>
+        // Выбор случайного места для клада (от 0 до size -1)
+        // координаты верхнего левого угла x:0, y:0
+        // координаты нижнего правого угла x:399, y:399
+        var getRandomNumber = function (size) {
+            return Math.floor(Math.random() * size);
+        };
+            // вычесляем расстояние от клика до клада
+            var getDistance = function (event, target) {
+                var diffX = event.offsetX - target.x;
+                var diffY = event.offsetY - target.y;
+                return Math.sqrt(diffX * diffX + diffY * diffY); // Теорема Пифагора
+            };
+             // Сообщаем игроку, насколько он близок к цели
+             var getDistanceHint = function (distance) {
+                if (distance < 10) {
+                    return 'Обожжешься!';
+                } else if (distance < 20) {
+                    return 'Очень горячо!';
+                } else if (distance < 40) {
+                    return 'Горячо!';
+                } else if (distance < 80) {
+                    return 'Тепло!';
+                } else if (distance < 160) {
+                    return 'Холодно!';
+                } else if (distance < 320) {
+                    return 'Очень холодно!';
+                } else {
+                    return 'Замерзнешь!';
+                }
+            };
+        // Задаем координаты клада
+        var width = 400;
+        var height = 400;
+        var clicks = 0; // отслеживание число кликов
+        // Случайная позиция клада
+        var target = {
+           x: getRandomNumber(width),
+           y: getRandomNumber(height)
+        };
+        // Обработчик кликов для img
+        $('#map').click (function(event) {
+            clicks++;
+            // Отображение дистанции от клика до клада
+            var distance = getDistance(event, target);
+            // Преобразуем расстояние в подсказку
+            var distanceHint = getDistanceHint(distance);
+            // Записываем новую подсказку
+            $('#distance').text(distanceHint);
+            // Проверка игры до 8 px от цели
+            if (distance < 8) {
+                 alert('Клад найден! Сделано кликов: ' + clicks);
+            }
+                    
+        });
+        
+            </script>
+        
+           
+
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+
+
 
     
 </body>
